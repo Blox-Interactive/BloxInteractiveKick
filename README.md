@@ -24,7 +24,7 @@ To use the Blox Interactive Kick Module, insert the following script into your g
 local HttpService = game:GetService("HttpService")
 
 -- Define the GitHub URL for the raw module file
-local moduleUrl = 'https://raw.githubusercontent.com/username/repository/branch/KickModule.lua' -- Replace with your GitHub URL
+local moduleUrl = 'https://raw.githubusercontent.com/BloxInteractive/BloxInteractiveKick/main/KickModule.lua' -- Replace with your GitHub URL
 
 -- Function to fetch and load the module from GitHub
 local function loadModule(url)
