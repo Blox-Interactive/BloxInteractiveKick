@@ -1,41 +1,58 @@
-# Roblox Kick Module
+# Blox Interactive Kick Module
 
 ## Overview
-This module manages kick requests from an external server. You can configure the `gameName` and polling interval.
+
+The Blox Interactive Kick Module is designed to manage player kick requests from an external server. This module allows you to configure the `gameName` and polling interval to suit your needs. It includes a script for fetching and integrating the module into your Roblox game.
+
+## Features
+
+- **External Kick Management:** Integrates with a serverless function to handle player kick requests.
+- **Configurable Settings:** Allows customization of the `gameName` and polling interval.
+- **Automatic Module Integration:** Fetches and loads the module from GitHub directly into Roblox Studio.
 
 ## Installation
 
-1. **Download the Module:**
-   - The module is hosted on GitHub. Use the following script to fetch and use it in Roblox Studio.
+### 1. **Insert the Module Fetching Script**
 
-   ```lua
-   local HttpService = game:GetService("HttpService")
+To use the Blox Interactive Kick Module, insert the following script into your game. This script will download the module from GitHub and configure it for your game.
 
-   local moduleUrl = 'https://raw.githubusercontent.com/username/repository/branch/KickModule.lua' -- Replace with your URL
+**Script to Load Blox Interactive Kick Module:**
 
-   local function loadModule(url)
-       local success, response = pcall(function()
-           return HttpService:GetAsync(url)
-       end)
-       
-       if success then
-           local moduleScript = Instance.new("ModuleScript")
-           moduleScript.Name = "KickModule"
-           moduleScript.Source = response
-           moduleScript.Parent = game.ServerScriptService -- or wherever you want to store it
-           
-           return require(moduleScript)
-       else
-           warn("Failed to load module: " .. response)
-           return nil
-       end
-   end
+```lua
+-- Script to Download and Load Blox Interactive Kick Module from GitHub
 
-   local kickModule = loadModule(moduleUrl)
+local HttpService = game:GetService("HttpService")
 
-   if kickModule then
-       kickModule.gameName = 'NewGameName'
-       kickModule.pollInterval = 600 -- Set to 10 minutes (600 seconds)
-   else
-       warn("KickModule could not be loaded.")
-   end
+-- Define the GitHub URL for the raw module file
+local moduleUrl = 'https://raw.githubusercontent.com/username/repository/branch/KickModule.lua' -- Replace with your GitHub URL
+
+-- Function to fetch and load the module from GitHub
+local function loadModule(url)
+    local success, response = pcall(function()
+        return HttpService:GetAsync(url)
+    end)
+    
+    if success then
+        local moduleScript = Instance.new("ModuleScript")
+        moduleScript.Name = "KickModule"
+        moduleScript.Source = response
+        moduleScript.Parent = game.ServerScriptService -- Or choose another location as needed
+        
+        return require(moduleScript)
+    else
+        warn("Failed to load module: " .. response)
+        return nil
+    end
+end
+
+-- Load the module
+local kickModule = loadModule(moduleUrl)
+
+-- Check if the module was loaded successfully
+if kickModule then
+    -- Configure the module
+    kickModule.gameName = 'NewGameName' -- Replace with your actual game name
+    kickModule.pollInterval = 600 -- Set to your desired polling interval in seconds (600 seconds = 10 minutes)
+else
+    warn("KickModule could not be loaded.")
+end
